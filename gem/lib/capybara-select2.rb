@@ -38,7 +38,10 @@ module Capybara
       end
 
       [value].flatten.each do |value|
-        if find(:xpath, "//body").has_selector?("#{drop_container} li.select2-results__option")
+        if find(:xpath, "//body").has_selector?("#{drop_container} li.select2-results__option[role$=group]")
+          # select2 version 4.0
+          find(:xpath, "//body").find("#{drop_container} li.select2-results__option[role$=group]", text: value).click
+        elsif find(:xpath, "//body").has_selector?("#{drop_container} li.select2-results__option")
           # select2 version 4.0
           find(:xpath, "//body").find("#{drop_container} li.select2-results__option", text: value).click
         else
